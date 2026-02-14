@@ -1,7 +1,7 @@
 {
   "name": "GP2Y0A21YK",
   "version": "0.0.1",
-  "description": "GP2Y0A21YK 赤外線距離センサー用のブロック",
+  "description": "GP2Y0A21YK",
   "dependencies": {
     "core": "*"
   },
