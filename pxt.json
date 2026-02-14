@@ -1,7 +1,7 @@
 {
   "name": "GP2Y0A21YK",
   "version": "0.0.1",
-  "description": "シャープのGP2Y0A21YK（秋月電子通商さんの購入ページはhttps://akizukidenshi.com/catalog/g/g102551/）用のマイクロビット拡張機能です。 ピンを選べば、GP2Y0A21YKの距離を表示出来るようになります。",
+  "description": "シャープのGP2Y0A21YK用のマイクロビット拡張機能です。ピンを選べば距離を表示できます。",
   "dependencies": {
     "core": "*"
   },
@@ -10,4 +10,3 @@
   ],
   "public": true
 }
-
