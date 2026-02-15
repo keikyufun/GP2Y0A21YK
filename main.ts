@@ -1,24 +1,34 @@
-//% color=#FF8800 icon="\uf06e" block="GP2Y0A21YK"
+//% color=#2E8BFF icon="\uf2db" block="GP2Y0A21YK"
 namespace GP2Y0A21YK {
+
+    // GP2Y0A21YK の有効距離範囲
+    const MIN_CM = 10
+    const MAX_CM = 80
 
     //% block="GP2Y0A21YK 距離(cm) ピン %pin"
     export function distanceCm(pin: AnalogPin): number {
+        const adc = pins.analogReadPin(pin)
 
-        // ① アナログ値を読む（0〜1023）
-        let analog = pins.analogReadPin(pin)
+        // アナログ値が小さすぎると計算不能
+        if (adc <= 20) return -1
 
-        // ② アナログ値 → 電圧(V) に変換
-        //    micro:bit の基準電圧は 3.3V
-        let voltage = analog * 3.3 / 1023
+        // 近似式（逆比例）
+        let cm = 4800 / (adc - 20)
 
-        // ③ 電圧 → 距離(cm) に変換
-        //    正しい式： distance = 27.86 / (voltage - 0.42)
-        let distance = 27.86 / (voltage - 0.42)
+        // 有効範囲外は -1
+        if (cm < MIN_CM || cm > MAX_CM) return -1
 
-        // ④ 異常値の処理（近すぎ・遠すぎ）
-        if (distance < 10) distance = 10
-        if (distance > 80) distance = 80
+        return cm
+    }
 
-        return distance
+    //% block="GP2Y0A21YK 生のアナログ値 ピン %pin"
+    export function rawAnalog(pin: AnalogPin): number {
+        return pins.analogReadPin(pin)
+    }
+
+    //% block="GP2Y0A21YK 有効距離か？ ピン %pin"
+    export function inRange(pin: AnalogPin): boolean {
+        const d = distanceCm(pin)
+        return d >= MIN_CM && d <= MAX_CM
     }
 }
